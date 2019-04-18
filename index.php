@@ -4,15 +4,18 @@ require_once 'config.php';
 require_once 'Model.php';
 require_once 'Url.php';
 
+//создаем подключение
 $dsn = DRIVER . ':host=' . HOST . ';port=' . PORT . ';dbname=' . DBNAME . ';charset=' . CHARSET;
 $pdo = new PDO($dsn, USERNAME, USERPASSWORD, $options);
+
+//создаем объект для работы с урлом
 $obUrl = new Url($pdo);
 
+//вся работа с урлом, проверка на роут, на валидность
 if ($obUrl->isRoute()) {
     header( 'Location: ' . $obUrl->route, true, 301);
     exit;
 } elseif ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_REQUEST['url'])) {
-
     $url = $obUrl->validate($_REQUEST['url']);
 
     if ($url) {
@@ -26,11 +29,11 @@ if ($obUrl->isRoute()) {
 }
 
 function showUrl($hash) {
-    echo 'Короткая ссылка: http://' . $_SERVER['SERVER_NAME'] . '/' . $hash;
+    return 'Короткая ссылка: http://' . $_SERVER['SERVER_NAME'] . '/' . $hash;
 }
 
 ?>
-
+<!-- Небольшая лапша, форма введения урла -->
 <!DOCTYPE html>
 <html>
 <head>
