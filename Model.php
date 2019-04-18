@@ -1,6 +1,9 @@
 <?php
 class Model
 {
+    protected $table;
+    protected $id;
+
     public function __construct(PDO $db)
     {
         $this->db = $db;
